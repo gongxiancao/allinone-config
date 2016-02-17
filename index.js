@@ -3,7 +3,7 @@ var pathUtil = require('path'),
 
 module.exports = function (done) {
   var filePath, extname, stat, self = this;
-    fileNames = fs.readdirSync(app.config.paths.config);
+    fileNames = fs.readdirSync(self.config.paths.config);
 
   fileNames.forEach(function (fileName) {
     filePath = pathUtil.join(self.config.paths.config, fileName);
