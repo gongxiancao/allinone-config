@@ -1,9 +1,20 @@
 var pathUtil = require('path'),
-  fs = require('fs');
+  fs = require('fs'),
+  _ = require('lodash');
 
 module.exports = function (done) {
   var filePath, extname, stat, self = this;
-    fileNames = fs.readdirSync(self.config.paths.config);
+
+  var root = process.cwd(), configPath = pathUtil.join(root, 'config');
+    fileNames = fs.readdirSync(configPath);
+
+  self.config = {
+    paths: {
+      root: root,
+      config: configPath,
+      envConfig: pathUtil.join(configPath, 'env')
+    }
+  };
 
   fileNames.forEach(function (fileName) {
     filePath = pathUtil.join(self.config.paths.config, fileName);

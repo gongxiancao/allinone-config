@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/gongxiancao/framework-config/issues"
   },
-  "homepage": "https://github.com/gongxiancao/framework-config"
+  "homepage": "https://github.com/gongxiancao/framework-config",
+  "dependencies": {
+    "lodash": "^4.4.0"
+  }
 }
