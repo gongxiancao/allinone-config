@@ -1,12 +1,11 @@
-var pathUtil = require('path'),
+var _ = require('lodash'),
   fs = require('fs'),
-  _ = require('lodash');
+  async = require('async'),
+  pathUtil = require('path');
 
 module.exports = function (done) {
-  var filePath, extname, stat, self = this;
-
+  var self = this;
   var root = process.cwd(), configPath = pathUtil.join(root, 'config');
-    fileNames = fs.readdirSync(configPath);
 
   self.config = {
     paths: {
@@ -16,17 +15,27 @@ module.exports = function (done) {
     }
   };
 
-  fileNames.forEach(function (fileName) {
-    filePath = pathUtil.join(self.config.paths.config, fileName);
-    stat = fs.statSync(filePath);
-    extname = pathUtil.extname(filePath);
-    if(stat && stat.isFile && extname === '.js') {
-      _.merge(self.config, require(filePath));
-    }
+  fs.readdir(configPath, function (err, fileNames) {
+    async.each(fileNames, function (fileName, done) {
+      var filePath = pathUtil.join(configPath, fileName);
+      var extname = pathUtil.extname(filePath);
+      if(extname !== '.js') {
+        return done();
+      }
+      fs.stat(filePath, function (err, stat) {
+        if(err) {
+          return done();
+        }
+
+        if(stat.isFile()) {
+          _.merge(self.config, require(filePath));
+        }
+        done();
+      });
+    }, function () {
+      var envConfigfilePath = pathUtil.join(self.config.paths.envConfig, self.environment);
+      _.merge(self.config, require(envConfigfilePath));
+      done();
+    });
   });
-
-  var filePath = pathUtil.join(self.config.paths.envConfig, self.environment);
-  _.merge(self.config, require(filePath));
-
-  process.nextTick(done);
 };
