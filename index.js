@@ -1,9 +1,10 @@
 var _ = require('lodash'),
   fs = require('fs'),
   async = require('async'),
+  Promise = require('bluebird'),
   pathUtil = require('path');
 
-module.exports = function (done) {
+function lift (done) {
   var self = this;
   var root = process.cwd(), configPath = pathUtil.join(root, 'config');
 
@@ -39,3 +40,5 @@ module.exports = function (done) {
     });
   });
 };
+
+module.exports = Promise.promisify(lift);
