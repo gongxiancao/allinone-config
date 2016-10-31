@@ -1,5 +1,5 @@
 {
-  "name": "allinone-config",
+  "name": "ofa-config",
   "version": "1.0.0",
   "description": "config loader middleware",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/gongxiancao/allinone-config.git"
+    "url": "git://github.com/gongxiancao/ofa-config.git"
   },
   "author": "gongxiancao",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gongxiancao/allinone-config/issues"
+    "url": "https://github.com/gongxiancao/ofa-config/issues"
   },
-  "homepage": "https://github.com/gongxiancao/allinone-config",
+  "homepage": "https://github.com/gongxiancao/ofa-config",
   "dependencies": {
     "async": "1.5.2",
     "bluebird": "3.3.5",
