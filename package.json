@@ -1,6 +1,6 @@
 {
-  "name": "framework-config",
-  "version": "0.0.0",
+  "name": "allinone-config",
+  "version": "1.0.0",
   "description": "config loader middleware",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/gongxiancao/framework-config.git"
+    "url": "git://github.com/gongxiancao/allinone-config.git"
   },
   "author": "gongxiancao",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gongxiancao/framework-config/issues"
+    "url": "https://github.com/gongxiancao/allinone-config/issues"
   },
-  "homepage": "https://github.com/gongxiancao/framework-config",
+  "homepage": "https://github.com/gongxiancao/allinone-config",
   "dependencies": {
     "async": "1.5.2",
     "bluebird": "3.3.5",
