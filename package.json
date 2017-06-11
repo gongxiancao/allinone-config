@@ -1,6 +1,6 @@
 {
   "name": "ofa-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "config loader middleware",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/gongxiancao/ofa-config",
   "dependencies": {
-    "async": "1.5.2",
     "bluebird": "3.3.5",
     "lodash": "4.4.0"
   }

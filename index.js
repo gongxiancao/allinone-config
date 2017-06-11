@@ -1,10 +1,9 @@
 var _ = require('lodash'),
-  fs = require('fs'),
-  async = require('async'),
   Promise = require('bluebird'),
+  fs = require('fs'),
   pathUtil = require('path');
 
-function lift (done) {
+function lift () {
   var self = this;
   var root = process.cwd(), configPath = pathUtil.join(root, 'config');
 
@@ -16,29 +15,28 @@ function lift (done) {
     }
   };
 
-  fs.readdir(configPath, function (err, fileNames) {
-    async.each(fileNames, function (fileName, done) {
-      var filePath = pathUtil.join(configPath, fileName);
-      var extname = pathUtil.extname(filePath);
-      if(extname !== '.js') {
-        return done();
+  return Promise.fromCallback(function (done) {
+    return fs.readdir(configPath, done);
+  })
+  .each(function (fileName) {
+    var filePath = pathUtil.join(configPath, fileName);
+    var extname = pathUtil.extname(filePath);
+    if(extname !== '.js') {
+      return;
+    }
+    return Promise.fromCallback(function (done) {
+      return fs.stat(filePath, done);
+    })
+    .then(function (stat) {
+      if(stat.isFile()) {
+        _.merge(self.config, require(filePath));
       }
-      fs.stat(filePath, function (err, stat) {
-        if(err) {
-          return done();
-        }
-
-        if(stat.isFile()) {
-          _.merge(self.config, require(filePath));
-        }
-        done();
-      });
-    }, function () {
-      var envConfigfilePath = pathUtil.join(self.config.paths.envConfig, self.environment);
-      _.merge(self.config, require(envConfigfilePath));
-      done();
     });
+  })
+  .then(function () {
+    var envConfigfilePath = pathUtil.join(self.config.paths.envConfig, self.environment);
+    _.merge(self.config, require(envConfigfilePath));
   });
 };
 
-module.exports = Promise.promisify(lift);
+module.exports = lift;
